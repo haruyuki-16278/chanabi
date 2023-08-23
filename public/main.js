@@ -60,22 +60,30 @@ input.addEventListener('change', (ev) => {
  */
 const submitButton = document.querySelector('input#submit[type="button"]');
 submitButton.addEventListener('click', () => {
-  const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
-  console.log(imageData)
+  const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  const pixels = imageData.data;
   const dots = [];
 
-  const interval = 3;
-  console.log(canvas.height * canvas.width);
+  const interval = 5;
   for (let i = 0; i < canvas.height; i++) {
     if (i % interval !== 0) continue;
     for (let j = 0; j < canvas.width; j++) {
       if (j % interval !== 0) continue;
       const base = (i * canvas.width + j) * 4;
-      if (imageData[base] === 255 && imageData[base + 1] === 255 && imageData[base + 2] === 255) {
+      if (pixels[base] === 255 && pixels[base + 1] === 255 && pixels[base + 2] === 255) {
         dots.push([j, i]);
       }
     }
   }
+
+  ctx.fillStyle = 'rgb(0, 0, 0)'
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  dots.forEach((dot) => {
+    ctx.beginPath();
+    ctx.fillStyle = 'rgb(255, 255, 255)'
+    ctx.arc(dot[0], dot[1], 2, 0, Math.PI * 2);
+    ctx.fill();
+  })
 
   const body = {
     message: input.value,
