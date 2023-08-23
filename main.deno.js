@@ -38,8 +38,13 @@ serve(async (req) => {
   if (pathname === '/message') {
     if (req.method === 'GET') {
       const time = url.searchParams.get('time');
-      const res = await supabase.from('messages').select();
-      return new Response(JSON.stringify(res));
+      const res = await supabase
+                              .from('messages')
+                              .select('message, dots')
+                              .limit(1)
+                              .order('id', { ascending: false })
+      if (res?.error !== null) return new Response('internal server error', {status: 500});
+      return new Response(JSON.stringify({message: res.data[0].message, dots: res.data[0].dots}));
     } else if (req.method === 'POST') {
       const reader = req.body?.getReader();
       /**
