@@ -4,13 +4,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="utf-8">
     <title>chanabi</title>
+    <!-- google font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kaisei+Tokumin&family=Noto+Sans+JP&display=swap" rel="stylesheet">
+    <!-- google font -->
     <link rel="stylesheet" href="./style.css">
     <script type="module" src="./main.js"></script>
   </head>
   <body>
-    <canvas id="canvas"></canvas>
+    <canvas id="canvas" width="300" height="300"></canvas>
     <form>
-      <input type="text" id="message">
+      <input type="text" id="message" maxlength="9" required>
+      <input type="text" disabled style="display: none;">
       <input type="button" value="送る" id="submit">
     </form>
   </body>
