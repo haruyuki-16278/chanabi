@@ -44,7 +44,7 @@ serve(async (req) => {
                               .limit(1)
                               .order('id', { ascending: false })
       if (res?.error !== null) return new Response('internal server error', {status: 500});
-      return new Response(JSON.stringify({message: res.data[0].message, dots: res.data[0].dots}));
+      return new Response(JSON.stringify({message: res.data[0].message, dots: JSON.stringify(res.data[0].dots)}));
     } else if (req.method === 'POST') {
       const reader = req.body?.getReader();
       /**
