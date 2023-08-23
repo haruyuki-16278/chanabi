@@ -22,7 +22,8 @@ input.addEventListener('change', (ev) => {
    */
   const message = ev.target.value;
   const len = message.length;
-  const charSize = (canvas.height) / len;
+  const rows = Math.ceil(Math.sqrt(len))
+  const charSize = (canvas.height) / rows;
   console.log(charSize);
 
   // 文字の大きさを指定
@@ -35,11 +36,23 @@ input.addEventListener('change', (ev) => {
 
   // canvasに文字列を描画
   ctx.fillStyle = 'rgb(255, 255, 255)';
-  const textSize = ctx.measureText(message);
-  const textHeight = textSize.actualBoundingBoxAscent + textSize.actualBoundingBoxDescent;
-  const textWidth = textSize.width;
-  console.log(textSize);
-  ctx.fillText(message, (canvas.width - textWidth) / 2, (canvas.height + textHeight) / 2);
+  const translateFlag = len <= rows * (rows - 1);
+  if (translateFlag) ctx.translate(0, canvas.height / (rows * 2));
+  for(let i = 0; i < rows; i++) {
+    const text = message.substring(i * rows, i * rows + rows);
+    console.log(text)
+    const textSize = ctx.measureText(text);
+    const textBox = {
+      h: textSize.actualBoundingBoxAscent + textSize.actualBoundingBoxDescent,
+      w: textSize.width
+    };
+    ctx.fillText(
+      text,
+      (canvas.width - textBox.w) / 2,
+      canvas.height * ((1 + 2 * i) / (rows * 2)) + textBox.h / 2
+    );
+  }
+  if (translateFlag) ctx.translate(0, - canvas.height / (rows * 2));
 });
 
 /**
