@@ -50,7 +50,7 @@ serve(async (req) => {
       return new Response(JSON.stringify({body: res.data.map((item) => {
         return {
           message: item.message,
-          dots: JSON.stringify(item.dots)
+          dots: item.dots
         }
       })}));
     } else if (req.method === 'POST') {
