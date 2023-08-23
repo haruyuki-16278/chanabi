@@ -37,14 +37,22 @@ serve(async (req) => {
 
   if (pathname === '/message') {
     if (req.method === 'GET') {
-      const time = url.searchParams.get('time');
+      const time = Number(url.searchParams.get('time'));
+      if (!time) return new Response(`invalid time: ${url.searchParams.get('time')}`, {status: 400});
       const res = await supabase
                               .from('messages')
                               .select('message, dots')
-                              .limit(1)
-                              .order('id', { ascending: false })
-      if (res?.error !== null) return new Response('internal server error', {status: 500});
-      return new Response(JSON.stringify({message: res.data[0].message, dots: JSON.stringify(res.data[0].dots)}));
+                              .gte('created_at', new Date(time).toISOString())
+      if (res?.error !== null) {
+        console.log(res.error)
+        return new Response('internal server error', {status: 500});
+      }
+      return new Response(JSON.stringify(res.data.map((item) => {
+        return {
+          message: item.message,
+          dots: item.dots
+        }
+      })));
     } else if (req.method === 'POST') {
       const reader = req.body?.getReader();
       /**
