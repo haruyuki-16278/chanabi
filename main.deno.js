@@ -47,12 +47,12 @@ serve(async (req) => {
         console.log(res.error)
         return new Response('internal server error', {status: 500});
       }
-      return new Response(JSON.stringify(res.data.map((item) => {
+      return new Response(JSON.stringify({body: res.data.map((item) => {
         return {
           message: item.message,
           dots: JSON.stringify(item.dots)
         }
-      })));
+      })}));
     } else if (req.method === 'POST') {
       const reader = req.body?.getReader();
       /**
