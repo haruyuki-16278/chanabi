@@ -9,8 +9,11 @@ html, body {
 }
 
 :root {
-  --color-primary: #3cf;
+  --color-primary: #33ccff;
   --color-background: #123;
+  --color-kokihi: #c9171e;
+  --color-ruri: #1e50a2;
+  --color-yamabuki: #f8b500;
 
   font-family: 'Noto Sans JP';
 }
@@ -20,10 +23,10 @@ body {
   place-content: center;
   background-color: var(--color-background);
 
-  grid-template: "title subtitle" 46px
-                 "canvas canvas" 300px
-                 "form form" 80px
-                 / auto auto;
+  grid-template: "title subtitle ." 46px
+                 "canvas canvas palette" 300px
+                 "form form ." 80px
+                 / auto auto auto;
   gap: 8px;
 
   :is(h1).title {
@@ -46,6 +49,28 @@ body {
 
   :is(canvas)#canvas {
     grid-area: canvas;
+  }
+
+  .palette {
+    grid-area: palette;
+    display: grid;
+    grid-template-columns: 50px 130px;
+    gap: 8px;
+    place-content: center;
+
+    :is(label) {
+      color: var(--color-primary)
+    }
+    
+    :is(div).color {
+      grid-column: 1 / -1;
+      width: 60px;
+      height: 60px;
+      margin: 0 auto;
+      border-radius: 100vh;
+      border: 5px solid white;
+      background-color: var(--color-primary);
+    }
   }
 
   > form {
@@ -99,5 +124,15 @@ body {
         opacity: 0.8;
       }
     }
+  }
+}
+
+@media (width <= 600px) {
+  body {
+    grid-template: "title subtitle" 46px
+                   "canvas canvas" 300px
+                   "form form" 80px
+                   "palette palette" auto
+                   / auto auto;
   }
 }

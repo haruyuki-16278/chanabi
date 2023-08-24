@@ -76,7 +76,7 @@ input.addEventListener('change', (ev) => {
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   dots.forEach((dot) => {
     ctx.beginPath();
-    ctx.fillStyle = 'rgb(255, 255, 255)'
+    ctx.fillStyle = `rgb(${color.red}, ${color.green}, ${color.blue})`
     ctx.arc(dot[0], dot[1], 2, 0, Math.PI * 2);
     ctx.fill();
   })
@@ -96,7 +96,8 @@ submitButton.addEventListener('click', () => {
 
   const body = {
     message: input.value,
-    dots: dots
+    dots: dots,
+    color: `#${color.red.toString(16)}${color.green.toString(16)}${color.blue.toString(16)}`
   };
   console.log(body);
 
@@ -113,4 +114,26 @@ submitButton.addEventListener('click', () => {
     }
   };
   xhr.send(JSON.stringify(body));
+})
+
+/**
+ * @type {HTMLDivElement}
+ */
+const colorWindow = document.querySelector('div.color');
+/**
+ * @type {Array<HTMLInputElement>}
+ */
+const colorSliders = document.querySelectorAll('input[type="range"]');
+const color = {
+  red: 51,
+  green: 204,
+  blue: 255
+};
+const colorCode = () => `#${('0' + color.red.toString(16)).slice(-2)}${('0' + color.green.toString(16)).slice(-2)}${('0' + color.blue.toString(16)).slice(-2)}`
+colorSliders.forEach((colorSlider) => {
+  colorSlider.addEventListener('input', (ev) => {
+    color[colorSlider.id] = Number(ev.target.value);
+    console.log(color, colorCode());
+    colorWindow.style.backgroundColor = colorCode();
+  })
 })
