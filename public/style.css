@@ -81,17 +81,22 @@ body {
       border-radius: 100vh;
       padding: 0 12px;
 
-      background-color: var(--color-primary);
+      background-color: white;
       font-size: 20px;
-      color: white;
+      color: var(--color-primary);
 
       &:hover {
         cursor: pointer;
+        background-color: var(--color-primary);
+        color: white;
         opacity: 0.8;
       }
 
       &:focus {
+        background-color: var(--color-primary);
+        color: white;
         outline-color: var(--color-primary);
+        opacity: 0.8;
       }
     }
   }

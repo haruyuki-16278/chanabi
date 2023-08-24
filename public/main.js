@@ -10,6 +10,8 @@ const ctx = canvas.getContext('2d');
 ctx.fillStyle = 'rgb(0, 0, 0)';
 ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+let dots = [];
+
 /**
  * @type {HTMLInputElement}
  */
@@ -53,16 +55,10 @@ input.addEventListener('change', (ev) => {
     );
   }
   if (translateFlag) ctx.translate(0, - canvas.height / (rows * 2));
-});
 
-/**
- * @type {HTMLButtonElement}
- */
-const submitButton = document.querySelector('input#submit[type="button"]');
-submitButton.addEventListener('click', () => {
   const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
   const pixels = imageData.data;
-  const dots = [];
+  dots = [];
 
   const interval = 5;
   for (let i = 0; i < canvas.height; i++) {
@@ -85,6 +81,14 @@ submitButton.addEventListener('click', () => {
     ctx.fill();
   })
 
+  submitButton.focus();
+});
+
+/**
+ * @type {HTMLButtonElement}
+ */
+const submitButton = document.querySelector('input#submit[type="button"]');
+submitButton.addEventListener('click', () => {
   if (!input.value) {
     window.alert('文字列が空です');
     return
@@ -103,6 +107,7 @@ submitButton.addEventListener('click', () => {
   xhr.onload = () => {
     if (xhr.readyState == 4 && xhr.status == 201) {
       console.log(JSON.parse(xhr.responseText));
+      submitButton.blur();
     } else {
       console.log(`Error: ${xhr.status}`);
     }
