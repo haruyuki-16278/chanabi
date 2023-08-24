@@ -36,6 +36,7 @@ body {
   :is(span).subtitle {
     height: fit-content;
     margin-top: auto;
+    margin-bottom: 4px;
     grid-area: subtitle;
     font-size: 16px;
     font-weight: bold;
