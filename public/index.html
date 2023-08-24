@@ -13,9 +13,17 @@
     <script type="module" src="./main.js"></script>
   </head>
   <body>
+    <h1 class="title">chanabi</h1>
+    <span class="subtitle">messenger</span>
     <canvas id="canvas" width="300" height="300"></canvas>
     <form>
-      <input type="text" id="message" maxlength="9" required>
+      <input
+        id="message"
+        type="text"
+        autocomplete="off"
+        maxlength="9"
+        required
+        placeholder="9文字まで">
       <input type="text" disabled style="display: none;">
       <input type="button" value="送る" id="submit">
     </form>

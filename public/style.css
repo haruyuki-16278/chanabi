@@ -8,20 +8,90 @@ html, body {
   width: 100%;
 }
 
+:root {
+  --color-primary: #3cf;
+  --color-background: #123;
+
+  font-family: 'Noto Sans JP';
+}
+
 body {
   display: grid;
   place-content: center;
-}
+  background-color: var(--color-background);
 
-form {
-  width: 300px;
-  margin-top: 16px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  grid-template: "title subtitle" 46px
+                 "canvas canvas" 300px
+                 "form form" 80px
+                 / auto auto;
   gap: 8px;
 
-  > input#message {
-    width: 100%;
+  :is(h1).title {
+    height: fit-content;
+    grid-area: title;
+    font-size: 32px;
+    color: var(--color-primary);
+  }
+
+  :is(span).subtitle {
+    height: fit-content;
+    margin-top: auto;
+    grid-area: subtitle;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: right;
+    color: var(--color-primary)
+  }
+
+  :is(canvas)#canvas {
+    grid-area: canvas;
+  }
+
+  > form {
+    grid-area: form;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  
+    > input#message {
+      width: 100%;
+      height: 40px;
+      border: 2px solid var(--color-primary);
+      border-radius: 100vh;
+      padding: 2px;
+
+      font-size: 24px;
+      text-align: center;
+
+      &:focus {
+        outline-color: var(--color-primary);
+      }
+
+      &&::placeholder {
+        color: lightgray;
+      }
+    }
+
+    > input[type="button"] {
+      height: 32px;
+      border: 2px solid var(--color-primary);
+      border-radius: 100vh;
+      padding: 0 12px;
+
+      background-color: var(--color-primary);
+      font-size: 20px;
+      color: white;
+
+      &:hover {
+        cursor: pointer;
+        opacity: 0.8;
+      }
+
+      &:focus {
+        outline-color: var(--color-primary);
+      }
+    }
   }
 }

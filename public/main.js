@@ -85,6 +85,11 @@ submitButton.addEventListener('click', () => {
     ctx.fill();
   })
 
+  if (!input.value) {
+    window.alert('文字列が空です');
+    return
+  }
+
   const body = {
     message: input.value,
     dots: dots
