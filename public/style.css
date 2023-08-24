@@ -58,6 +58,10 @@ body {
     gap: 8px;
     place-content: center;
 
+    :is(select) {
+      grid-column: 1 / -1;
+    }
+
     :is(label) {
       color: var(--color-primary)
     }
@@ -138,9 +142,13 @@ body {
     .palette {
       grid-template-columns: 60px 50px 130px;
 
+      :is(select) {
+        grid-column: 2 / -1;
+      }
+
       :is(div).color {
         grid-column: auto;
-        grid-row: 1 / 4;
+        grid-row: 1 / 5;
       }
     }
 

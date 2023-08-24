@@ -13,11 +13,17 @@ ctx.fillRect(0, 0, canvas.width, canvas.height);
 let dots = [];
 
 /**
+ * @type {HTMLSelectElement}
+ */
+const select = document.querySelector('select');
+
+/**
  * @type {HTMLInputElement}
  */
 const input = document.querySelector('input#message');
 input.addEventListener('change', (ev) => {
   if (!ev.target.value) return;
+  console.log(select.value);
   /**
    * @type {string}
    * メッセージ花火で打ち上げる文字列
@@ -29,7 +35,7 @@ input.addEventListener('change', (ev) => {
   console.log(charSize);
 
   // 文字の大きさを指定
-  if (len > 0) ctx.font = `${charSize}px "Noto Sans JP"`;
+  if (len > 0) ctx.font = `${charSize}px ${select.value}`;
 
   // canvasの初期化
   ctx.clearRect(0, 0, canvas.width, canvas.width);
