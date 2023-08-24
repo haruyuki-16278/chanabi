@@ -41,7 +41,7 @@ serve(async (req) => {
       if (!time) return new Response(`invalid time: ${url.searchParams.get('time')}`, {status: 400});
       const res = await supabase
                               .from('messages')
-                              .select('message, dots')
+                              .select('message, dots, color')
                               .gte('created_at', new Date(time).toISOString())
       if (res?.error !== null) {
         console.log(res.error)
@@ -50,7 +50,8 @@ serve(async (req) => {
       return new Response(JSON.stringify({body: res.data.map((item) => {
         return {
           message: item.message,
-          dots: JSON.stringify(item.dots)
+          dots: JSON.stringify(item.dots),
+          color: item.color
         }
       })}));
     } else if (req.method === 'POST') {
@@ -69,7 +70,8 @@ serve(async (req) => {
                               .from('messages')
                               .insert({
                                 message: data.message,
-                                dots: data.dots
+                                dots: data.dots,
+                                color: data?.color
                               })
                               .select();
       console.log(res);
