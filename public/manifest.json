@@ -1,0 +1,17 @@
+{
+  "name": "chanabi",
+  "short_name": "chanabi",
+  "description": "VR花火アプリにメッセージの形をした花火を表示させられるアプリ",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/index.html",
+  "display": "fullscreen",
+  "theme_color": "#33ccff",
+  "background_color": "#112233"
+}
+
