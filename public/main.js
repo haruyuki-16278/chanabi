@@ -21,6 +21,7 @@ const select = document.querySelector('select');
  * @type {HTMLInputElement}
  */
 const input = document.querySelector('input#message');
+let message = '';
 input.addEventListener('change', (ev) => {
   if (!ev.target.value) return;
   console.log(select.value);
@@ -28,7 +29,7 @@ input.addEventListener('change', (ev) => {
    * @type {string}
    * メッセージ花火で打ち上げる文字列
    */
-  const message = ev.target.value;
+  message = ev.target.value;
   const len = message.length;
   const rows = Math.ceil(Math.sqrt(len))
   const charSize = (canvas.height) / rows;
@@ -62,10 +63,21 @@ input.addEventListener('change', (ev) => {
   }
   if (translateFlag) ctx.translate(0, - canvas.height / (rows * 2));
 
+  // 描画結果の画像から花火ドットを出す位置を計算
   const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-  const pixels = imageData.data;
-  dots = [];
+  dots = calcDotPosFromImageData(imageData);
 
+  drawDots(dots);
+});
+
+/**
+ * 描画結果の画像から花火ドットを出す座標を計算
+ * @param {ImageData} ImageData 
+ * @returns {Array<Array<Number>>}
+ */
+const calcDotPosFromImageData = function (imageData) {
+  const pixels = imageData.data;
+  const res = [];
   const interval = 5;
   for (let i = 0; i < canvas.height; i++) {
     if (i % interval !== 0) continue;
@@ -73,11 +85,18 @@ input.addEventListener('change', (ev) => {
       if (j % interval !== 0) continue;
       const base = (i * canvas.width + j) * 4;
       if (pixels[base] === 255 && pixels[base + 1] === 255 && pixels[base + 2] === 255) {
-        dots.push([j, i]);
+        res.push([j, i]);
       }
     }
   }
+  return res;
+};
 
+/**
+ * 座標の配列からドットを描画
+ * @param {Array<Array<Number>>} dots
+ */
+const drawDots = function (dots) {
   ctx.fillStyle = 'rgb(0, 0, 0)'
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   dots.forEach((dot) => {
@@ -86,9 +105,7 @@ input.addEventListener('change', (ev) => {
     ctx.arc(dot[0], dot[1], 2, 0, Math.PI * 2);
     ctx.fill();
   })
-
-  submitButton.focus();
-});
+};
 
 /**
  * @type {HTMLButtonElement}
@@ -136,10 +153,12 @@ const color = {
   blue: 255
 };
 const colorCode = () => `#${('0' + color.red.toString(16)).slice(-2)}${('0' + color.green.toString(16)).slice(-2)}${('0' + color.blue.toString(16)).slice(-2)}`
+
 colorSliders.forEach((colorSlider) => {
   colorSlider.addEventListener('input', (ev) => {
     color[colorSlider.id] = Number(ev.target.value);
     console.log(color, colorCode());
     colorWindow.style.backgroundColor = colorCode();
+    drawDots(dots);
   })
 })
