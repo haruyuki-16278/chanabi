@@ -11,7 +11,8 @@
     <!-- google font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Aoboshi+One&family=Cherry+Bomb+One&family=Chokokutai&family=Noto+Sans+JP&family=Palette+Mosaic&display=swap" rel="stylesheet">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Aoboshi+One&family=Cherry+Bomb+One&family=Chokokutai&family=Noto+Sans+JP&family=Palette+Mosaic&display=swap" as="style">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Aoboshi+One&family=Cherry+Bomb+One&family=Chokokutai&family=Noto+Sans+JP&family=Palette+Mosaic&display=swap" media="print" onload="this.media='all'">
     <!-- google font -->
     <link rel="stylesheet" href="./style.css">
     <script type="module" src="./main.js"></script>
@@ -20,6 +21,17 @@
     <h1 class="title">chanabi</h1>
     <span class="subtitle">messenger</span>
     <canvas id="canvas" width="300" height="300"></canvas>
+    <form>
+      <input
+        id="message"
+        type="text"
+        autocomplete="off"
+        maxlength="9"
+        required
+        placeholder="9文字まで">
+      <input type="text" disabled style="display: none;">
+      <input type="button" value="送る" id="submit">
+    </form>
     <div class="palette">
       <select>
         <option value="'Noto Sans JP'">Noto Sans JP</option>
@@ -36,16 +48,5 @@
       <input type="range" id="blue" name="color-blue" min="1" max="255" value="255">
       <div class="color"></div>
     </div>
-    <form>
-      <input
-        id="message"
-        type="text"
-        autocomplete="off"
-        maxlength="9"
-        required
-        placeholder="9文字まで">
-      <input type="text" disabled style="display: none;">
-      <input type="button" value="送る" id="submit">
-    </form>
   </body>
 </html>
