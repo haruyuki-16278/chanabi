@@ -13,11 +13,6 @@ ctx.fillRect(0, 0, canvas.width, canvas.height);
 let dots = [];
 
 /**
- * @type {HTMLSelectElement}
- */
-const select = document.querySelector('select');
-
-/**
  * @type {HTMLInputElement}
  */
 const input = document.querySelector('input#message');
@@ -30,6 +25,17 @@ input.addEventListener('change', (ev) => {
    * メッセージ花火で打ち上げる文字列
    */
   message = ev.target.value;
+
+  drawText();
+
+  // 描画結果の画像から花火ドットを出す位置を計算
+  const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  dots = calcDotPosFromImageData(imageData);
+
+  drawDots(dots);
+});
+
+const drawText = function () {
   const len = message.length;
   const rows = Math.ceil(Math.sqrt(len))
   const charSize = (canvas.height) / rows;
@@ -62,13 +68,7 @@ input.addEventListener('change', (ev) => {
     );
   }
   if (translateFlag) ctx.translate(0, - canvas.height / (rows * 2));
-
-  // 描画結果の画像から花火ドットを出す位置を計算
-  const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-  dots = calcDotPosFromImageData(imageData);
-
-  drawDots(dots);
-});
+}
 
 /**
  * 描画結果の画像から花火ドットを出す座標を計算
@@ -161,4 +161,16 @@ colorSliders.forEach((colorSlider) => {
     colorWindow.style.backgroundColor = colorCode();
     drawDots(dots);
   })
+})
+
+/**
+ * @type {HTMLSelectElement}
+ */
+const select = document.querySelector('select');
+select.addEventListener('change', (ev) => {
+  // ev.target.options[ev.target.selectedIndex].value);
+  drawText();
+  const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  dots = calcDotPosFromImageData(imageData);
+  drawDots(dots);
 })
